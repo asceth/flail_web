@@ -1,0 +1,26 @@
+!!!
+%html
+  %head
+    %title Flail
+    = stylesheet_link_tag "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+  %body
+    .container
+      .row
+        .span12
+          - if flash[:alert]
+            .alert
+              = flash[:alert]
+          - if flash[:error]
+            .alert.alert-danger
+              = flash[:error]
+          - if flash[:notice]
+            .alert.alert-info
+              = flash[:notice]
+
+      = yield
+
+      %footer.footer
+        %blockquote
+          %p You're doing it wrong.
