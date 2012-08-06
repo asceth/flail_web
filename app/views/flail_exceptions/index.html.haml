@@ -1,0 +1,40 @@
+.subnav.subnav-fixed
+  %ul.nav.nav-pills
+    %li{:class => active?}= link_to(icon('icon-dashboard') + ' Dashboard', params.merge(:tagged => nil))
+    - FlailException.tags.map do |tag|
+      %li{:class => active?(tag)}= link_to(tag, params.merge(:tagged => tag))
+
+%header.jumbotron
+  %h1
+    %span.text-quiet Exception /
+    %span Overview
+
+.row
+  .span12
+    .hide
+      = link_to('last 24 hours', 'javascript:;', 'data-d3-target' => '#exceptions-chart', 'data-d3-source' => flail_exceptions_url, 'data-d3-type' => 'bar-chart', 'data-d3-active' => true)
+    #exceptions-chart.d3-bar.d3-vertical
+    .clearfix
+
+.row
+  .span12
+    .page-header
+      %h2 Unresolved Exceptions
+    #exceptions-unresolved
+      - FlailException.digested.map do |fes|
+        .well.well-exception
+          .pull-right
+            %p.label.label-info= fes.first.tag
+            %p.label= fes.first.environment
+          .occurences.pull-left
+            %h2
+              .text-danger= fes.size
+              %small occurrences
+          %h4
+            %span= link_to(fes.first.class_name, flail_exception_url(fes.first))
+            %small== last occurence #{time_ago_in_words(fes.first.created_at)}
+          %p.message= fes.first.message
+          .clearfix
+          .actions
+            = simple_form_for(fes.first, :html => {:remote => true}) do |f|
+              %button{:type => 'submit', :class => 'btn btn-success', :rel => 'tooltip', :title => 'Resolve', 'data-placement' => 'bottom'}= icon('icon-check')

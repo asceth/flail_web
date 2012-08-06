@@ -7,9 +7,13 @@ gem 'pg', '~> 0.13.0'
 #
 # alphabetized
 #
+gem 'd3-rails', '~> 0.0.5'
 gem 'devise', '2.1.0'
 
+gem 'foreman'
+
 gem 'haml', '3.1.6'
+gem 'has_scope'
 
 gem 'inherited_resources', '1.3.1'
 
