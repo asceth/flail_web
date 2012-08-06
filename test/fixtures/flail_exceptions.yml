@@ -1,1 +1,12 @@
-one: {}
+gitlab_one:
+  target_url: "https://dashboard.ors.sc.gov/gitlab"
+  referer_url: "https://dashboard.ors.sc.gov"
+  user_agent: "Google/Chrome"
+  environment: "production"
+  hostname: "scallop"
+  tag: "dashboard"
+  class_name: "FlailTestingException"
+  message: "Testing flail with a flailing exception"
+  params: "{controller: 'pages', action: 'index'}"
+  user: "{}"
+  trace: "{}"

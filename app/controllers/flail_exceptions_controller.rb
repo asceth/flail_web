@@ -34,21 +34,7 @@ class FlailExceptionsController < ApplicationController
   end
 
   def create
-    fe = FlailException.new
-
-    fe.target_url = params[:target_url]
-    fe.referer_url = params[:referer_url]
-    fe.user_agent = params[:user_agent]
-    fe.environment = params[:environment]
-    fe.hostname = params[:hostname]
-    fe.tag = params[:tag]
-    fe.class_name = params[:class_name]
-    fe.message = params[:message]
-    fe.params = ActiveSupport::JSON.decode(params[:parameters] || '{}')
-    fe.user = ActiveSupport::JSON.decode(params[:user] || '{}')
-    fe.trace = ActiveSupport::JSON.decode(params[:trace] || '{}')
-
-    fe.save!
+    FlailException.swing!(params)
 
     render :nothing => true
   end
