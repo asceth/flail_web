@@ -1,7 +1,14 @@
 $(document).ready(function() {
 
+  // need to execute return js
+  $('form').on('ajax:success', function (evt, data, status, xhr) {
+    eval(xhr.responseText);
+  });
+
+  // tooltips
   $('[rel="tooltip"]').tooltip({});
 
+  // d3 bar chart magic
   $('a[data-d3-target]').each(function () {
     var el = $(this);
 

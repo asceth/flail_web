@@ -5,7 +5,7 @@ class FlailException < ActiveRecord::Base
   serialize :params
   serialize :backtrace
 
-  has_many :occurences, :class_name => 'FlailException', :foreign_key => 'digest', :primary_key => 'digest'
+  has_many :occurrences, :class_name => 'FlailException', :foreign_key => 'digest', :primary_key => 'digest'
 
   scope :tagged, lambda {|tag| where(:tag => tag)}
   scope :unresolved, where(:resolved_at => nil)

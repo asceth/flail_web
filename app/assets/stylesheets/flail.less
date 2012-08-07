@@ -1,3 +1,16 @@
+.navbar .brand {
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+body {
+  padding-top: 90px;
+
+  &.digests {
+    padding-top: 50px;
+  }
+}
+
 header {
   margin-bottom: 18px;
 }
@@ -29,6 +42,29 @@ header {
 
     form {
       margin-bottom: 0px;
+    }
+  }
+}
+
+.traces {
+  list-style: none;
+  margin-left: 0px;
+  padding-top: 9px;
+
+  td {
+    height: 26px;
+
+    &.line {
+      width: 30px;
+      border-right: 1px solid #ccc;
+    }
+
+    .trace {
+      height: 100%;
+
+      .desc {
+        font-weight: bold;
+      }
     }
   }
 }

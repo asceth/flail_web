@@ -38,22 +38,4 @@ class FlailExceptionsController < ApplicationController
 
     render :nothing => true
   end
-
-  #
-  # for now update simply resolves the set of digested exceptions
-  #
-  def update
-    resource.resolve!
-
-    respond_to do |format|
-      format.js do
-        render :nothing => true
-      end
-
-      format.html do
-        flash[:notice] = "Resolved #{resource.occurences.count + 1} flailing exceptions: #{resource.class_name}"
-        redirect_to root_url
-      end
-    end
-  end
 end

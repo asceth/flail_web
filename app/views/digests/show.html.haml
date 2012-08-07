@@ -1,0 +1,58 @@
+%header.jumbotron
+  %h1
+    %span.text-quiet Exception /
+    %span Digest Set
+    %small= resource.digest
+
+.row
+  .span12
+    .page-header
+      .pull-right
+        %p.label.label-info= resource.tag
+        %p.label= resource.environment
+      %h2
+        = resource.class_name
+        %small= resource.message
+.row
+  .span12
+    .pull-right
+      = simple_form_for(resource, :url => digest_url(resource.digest)) do |f|
+        %button{:type => 'submit', :class => 'btn btn-success', :rel => 'tooltip', :title => 'Resolve', 'data-placement' => 'left'}= icon('icon-check')
+
+    .pager
+      %li{:class => (params[:offset].to_i == 0 ? 'disabled' : '')}
+        = link_to(icon('icon-arrow-left') + ' Previous', params.merge(:offset => params[:offset].to_i - 1))
+      %li.text-danger.text-large.well-exception== #{params[:offset].to_i + 1} / #{resource.occurrences.count + 1}
+      %li{:class => (params[:offset].to_i == resource.occurrences ? 'disabled' : '')}
+        = link_to('Next '.html_safe + icon('icon-arrow-right'), params.merge(:offset => params[:offset].to_i + 1))
+    .clearfix
+.row
+  .span9
+    .tabbable
+      %ul.nav.nav-tabs
+        %li.active= link_to('Backtrace', '#backtrace', 'data-toggle' => 'tab')
+        %li= link_to('Parameters', '#params', 'data-toggle' => 'tab')
+        %li= link_to('User', '#user', 'data-toggle' => 'tab')
+      .tab-content
+        #backtrace.tab-pane.active
+          %table.table.table-striped.traces
+            - resource.backtrace.each do |trace|
+              %tr
+                %td.line= trace[:line]
+                %td
+                  .trace
+                    %span.file= trace[:file]
+                    %span.text-quiet= icon('icon-arrow-right')
+                    %span.desc= trace[:desc]
+        #params.tab-pane
+          %pre= resource.params.inspect
+        #user.tab-pane
+          %pre= resource.user.inspect
+  .span3
+    %dl
+    %dt.text-quiet Occurred
+    %dd= resource.created_at.strftime('%Y-%d-%m %l:%M:%S %p')
+    %dt.text-quiet Where
+    %dd= link_to(resource.target_url, resource.target_url)
+    %dt.text-quiet Server
+    %dd= resource.hostname

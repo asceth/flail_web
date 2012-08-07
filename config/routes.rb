@@ -4,4 +4,5 @@ FlailWeb::Application.routes.draw do
   post '/swing' => 'flail_exceptions#create'
 
   resources :flail_exceptions
+  resources :digests
 end
