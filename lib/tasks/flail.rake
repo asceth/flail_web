@@ -27,6 +27,8 @@ namespace :flail do
 
     RANDOM_METHODS = ActiveSupport.methods.shuffle[1..8]
 
+    RANDOM_TAGS = ["flail", "github", "enterprise", "voyager"]
+
     def random_backtrace
       backtrace = []
       99.times do |t|
@@ -47,7 +49,7 @@ namespace :flail do
                                                       :user_agent => "Google/Chrome",
                                                       :environment => "production",
                                                       :hostname => "localhost",
-                                                      :tag => "flail",
+                                                      :tag => RANDOM_TAGS.shuffle.first.to_s,
                                                       :class_name => "StandardError",
                                                       :message => "Oops. Something went wrong!",
                                                       :params => {

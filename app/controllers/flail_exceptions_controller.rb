@@ -10,7 +10,10 @@ class FlailExceptionsController < ApplicationController
           (23 - index).hours.ago
         end
 
-        group = FlailException.within(24.hours.ago).group_by do |fe|
+        scope = FlailException.within(24.hours.ago)
+        scope = scope.tagged(params[:tagged]) unless params[:tagged].blank?
+
+        group = scope.group_by do |fe|
           fe.created_at.strftime('%j/%H')
         end
 

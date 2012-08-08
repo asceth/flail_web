@@ -12,7 +12,7 @@
 .row
   .span12
     .hide
-      = link_to('last 24 hours', 'javascript:;', 'data-d3-target' => '#exceptions-chart', 'data-d3-source' => flail_exceptions_url, 'data-d3-type' => 'bar-chart', 'data-d3-active' => true)
+      = link_to('last 24 hours', 'javascript:;', 'data-d3-target' => '#exceptions-chart', 'data-d3-source' => flail_exceptions_url(params), 'data-d3-type' => 'bar-chart', 'data-d3-active' => true)
     #exceptions-chart.d3-bar.d3-vertical
     .clearfix
 
