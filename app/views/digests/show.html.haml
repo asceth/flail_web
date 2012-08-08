@@ -19,16 +19,24 @@
       = simple_form_for(resource, :url => digest_url(resource.digest)) do |f|
         %button{:type => 'submit', :class => 'btn btn-success', :rel => 'tooltip', :title => 'Resolve', 'data-placement' => 'left'}= icon('icon-check')
 
-    .pager
-      %li{:class => (params[:offset].to_i == 0 ? 'disabled' : '')}
-        = link_to(icon('icon-arrow-left') + ' Previous', params.merge(:offset => params[:offset].to_i - 1))
-      %li.text-danger.text-large.well-exception== #{params[:offset].to_i + 1} / #{resource.occurrences.count + 1}
-      %li{:class => (params[:offset].to_i == resource.occurrences ? 'disabled' : '')}
-        = link_to('Next '.html_safe + icon('icon-arrow-right'), params.merge(:offset => params[:offset].to_i + 1))
-    .clearfix
+    %dl.exception-info
+      %dt.text-quiet Occurred
+      %dd= resource.created_at.strftime('%Y-%d-%m %l:%M:%S %p')
+      %dt.text-quiet Where
+      %dd= link_to(resource.target_url, resource.target_url)
+      %dt.text-quiet Server
+      %dd= resource.hostname
+    %hr
 .row
-  .span9
+  .span12
     .tabbable
+      .pull-right.pull-relative
+        .pager.pager-with-tabs
+          %li{:class => (params[:offset].to_i == 0 ? 'disabled' : '')}
+            = link_to(icon('icon-arrow-left') + ' Previous', params.merge(:offset => params[:offset].to_i - 1))
+          %li.text-danger.text-large.well-exception== #{params[:offset].to_i + 1} / #{resource.occurrences.count}
+          %li{:class => (params[:offset].to_i == (resource.occurrences.count - 1) ? 'disabled' : '')}
+            = link_to('Next '.html_safe + icon('icon-arrow-right'), params.merge(:offset => params[:offset].to_i + 1))
       %ul.nav.nav-tabs
         %li.active= link_to('Backtrace', '#backtrace', 'data-toggle' => 'tab')
         %li= link_to('Parameters', '#params', 'data-toggle' => 'tab')
@@ -48,11 +56,3 @@
           %pre= resource.params.inspect
         #user.tab-pane
           %pre= resource.user.inspect
-  .span3
-    %dl
-    %dt.text-quiet Occurred
-    %dd= resource.created_at.strftime('%Y-%d-%m %l:%M:%S %p')
-    %dt.text-quiet Where
-    %dd= link_to(resource.target_url, resource.target_url)
-    %dt.text-quiet Server
-    %dd= resource.hostname
