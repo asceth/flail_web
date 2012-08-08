@@ -37,12 +37,14 @@ class FlailException < ActiveRecord::Base
       select('distinct tag').map(&:tag)
     end
 
-    def digested
-      unresolved.group_by(&:digest).sort_by do |digest, fes|
+    def digested(flail_exceptions)
+      flail_exceptions.group_by(&:digest).sort_by do |digest, fes|
         fes.select(&:created_at).max
       end.reverse.inject([]) do |arr, (digest, fes)|
         arr << fes.sort_by(&:created_at).reverse
-      end
+      end.sort_by do |fes|
+        fes.first.created_at
+      end.reverse
     end
 
     def swing!(params)

@@ -21,7 +21,7 @@
     .page-header
       %h2 Unresolved Exceptions
     #exceptions-unresolved
-      - FlailException.digested.map do |fes|
+      - FlailException.digested(collection).map do |fes|
         .well.well-exception{:id => "digest_#{fes.first.digest}"}
           .pull-right
             %p.label.label-info= fes.first.tag

@@ -2,6 +2,7 @@ class FlailExceptionsController < ApplicationController
   inherit_resources
 
   has_scope :tagged, :only => [:index]
+  has_scope :unresolved, :type => :boolean, :default => true, :only => [:index]
 
   def index
     index! do |format|
