@@ -28,7 +28,7 @@
             %p.label= fes.first.environment
           .occurences.pull-left
             %h2
-              .text-danger= fes.size
+              .text-danger= fes.first.occurrences.count
               %small occurrences
           %h4
             %span= link_to(fes.first.class_name, digest_url(fes.first.digest))

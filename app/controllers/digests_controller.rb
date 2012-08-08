@@ -17,14 +17,14 @@ class DigestsController < ApplicationController
       end
 
       format.html do
-        flash[:notice] = "Resolved #{resource.occurrences.count + 1} flailing exceptions: #{resource.class_name}"
+        flash[:notice] = "Resolved #{resource.occurrences.count} flailing exceptions: #{resource.class_name}"
         redirect_to root_url
       end
     end
   end
 
   def resource
-    @resource ||= FlailException.unresolved.with_digest(params[:id]).order('created_at desc').offset(params[:offset].to_i).first
+    @resource ||= FlailException.with_digest(params[:id]).order('created_at desc').offset(params[:offset].to_i).first
   end
   helper_method :resource
 end
