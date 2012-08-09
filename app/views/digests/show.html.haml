@@ -41,6 +41,7 @@
         %li.active= link_to('Backtrace', '#backtrace', 'data-toggle' => 'tab')
         %li= link_to('Parameters', '#params', 'data-toggle' => 'tab')
         %li= link_to('User', '#user', 'data-toggle' => 'tab')
+        %li= link_to('Env', '#env', 'data-toggle' => 'tab')
       .tab-content
         #backtrace.tab-pane.active
           %table.table.table-striped.traces
@@ -56,3 +57,5 @@
           %pre= resource.params.inspect
         #user.tab-pane
           %pre= resource.user.inspect
+        #env.tab-pane
+          %pre= resource.rack.inspect
