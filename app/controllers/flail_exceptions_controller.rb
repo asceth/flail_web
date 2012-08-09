@@ -1,4 +1,6 @@
 class FlailExceptionsController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:create]
+
   inherit_resources
 
   has_scope :tagged, :only => [:index]
