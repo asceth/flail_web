@@ -58,10 +58,10 @@ class FlailException < ActiveRecord::Base
       fe.tag = params[:tag]
       fe.class_name = params[:class_name]
       fe.message = params[:message]
-      fe.params = ActiveSupport::JSON.decode(params[:parameters] || '{}')
-      fe.user = ActiveSupport::JSON.decode(params[:user] || '{}')
-      fe.trace = ActiveSupport::JSON.decode(params[:trace] || '{}')
-      fe.rack = ActiveSupport::JSON.decode(params[:rack] || '{}')
+      fe.params = params[:parameters] || '{}'
+      fe.user = params[:user] || '{}'
+      fe.trace = params[:trace] || '{}'
+      fe.rack = params[:rack] || '{}'
 
       fe.save!
       fe
