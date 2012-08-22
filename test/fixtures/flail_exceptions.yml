@@ -9,4 +9,4 @@ gitlab_one:
   message: "Testing flail with a flailing exception"
   params: "{controller: 'pages', action: 'index'}"
   user: "{}"
-  trace: "{}"
+  backtrace: "{}"

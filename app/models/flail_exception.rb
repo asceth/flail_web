@@ -20,16 +20,7 @@ class FlailException < ActiveRecord::Base
 
   def set_digest
     bt = self.backtrace.first
-    self.digest = Digest::MD5.hexdigest("#{tag}#{environment}#{class_name}:#{bt[:file]}:#{bt[:line]}")
-  end
-
-  def trace=(value)
-    self.backtrace = []
-
-    value.map do |line|
-      file, line, desc = line.split(':')
-      self.backtrace << {:file => file, :line => line, :desc => desc}
-    end
+    self.digest = Digest::MD5.hexdigest("#{tag}#{environment}#{class_name}:#{bt[:file]}:#{bt[:number]}")
   end
 
   module ClassMethods

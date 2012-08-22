@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120806013012) do
+ActiveRecord::Schema.define(:version => 20120821143437) do
 
   create_table "flail_exceptions", :force => true do |t|
     t.string   "target_url"

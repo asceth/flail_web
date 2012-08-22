@@ -35,7 +35,7 @@ namespace :flail do
         file = "/path/to/file.rb"
         line = t.hash % 1000
         desc = RANDOM_METHODS.shuffle.first.to_s
-        backtrace << "#{file}:#{line}:#{desc}"
+        backtrace << {:file => file, :number => line, :method => desc}
       end
       backtrace
     end
@@ -60,7 +60,7 @@ namespace :flail do
                                                         :id => "1234",
                                                         :name => "jsmith"
                                                       }.to_json,
-                                                      :trace => random_backtrace.to_json,
+                                                      :trace => random_backtrace,
                                                     })
 
         fe = FlailException.swing!(error_report)
