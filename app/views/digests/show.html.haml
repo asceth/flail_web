@@ -47,12 +47,12 @@
           %table.table.table-striped.traces
             - resource.backtrace.each do |trace|
               %tr
-                %td.line= trace[:line]
+                %td.line= trace[:number]
                 %td
                   .trace
                     %span.file= trace[:file]
                     %span.text-quiet= icon('icon-arrow-right')
-                    %span.desc= trace[:desc]
+                    %span.desc= trace[:method]
         #params.tab-pane
           %pre= resource.params.inspect
         #user.tab-pane
