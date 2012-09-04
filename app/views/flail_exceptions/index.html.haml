@@ -37,4 +37,4 @@
           .clearfix
           .actions
             = simple_form_for(fes.first, :url => digest_url(fes.first.digest), :html => {:remote => true}) do |f|
-              %button{:type => 'submit', :class => 'btn btn-success', :rel => 'tooltip', :title => 'Resolve', 'data-placement' => 'bottom'}= icon('icon-check')
+              %button{:type => 'submit', :class => 'btn btn-success'}== #{icon('icon-check')} Resolve
