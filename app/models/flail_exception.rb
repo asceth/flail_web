@@ -20,7 +20,14 @@ class FlailException < ActiveRecord::Base
 
   def set_digest
     bt = self.backtrace.first
-    self.digest = Digest::MD5.hexdigest("#{tag}#{environment}#{class_name}:#{bt[:file]}:#{bt[:number]}")
+
+    controller, action = if params.is_a?(Hash)
+                           [params['controller'], params['action']]
+                         else
+                           ['controller', 'action']
+                         end
+
+    self.digest = Digest::MD5.hexdigest("#{tag}#{environment}#{class_name}:#{controller}:#{action}:#{bt[:file]}:#{bt[:number]}")
   end
 
   module ClassMethods
