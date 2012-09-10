@@ -17,7 +17,7 @@
   .span12
     .pull-right
       = simple_form_for(resource, :url => digest_url(resource.digest)) do |f|
-        %button{:type => 'submit', :class => 'btn btn-success', :rel => 'tooltip', :title => 'Resolve', 'data-placement' => 'left'}= icon('icon-check')
+        %button{:type => 'submit', :class => 'btn btn-success'}= "#{icon('icon-check')} Resolve"
 
     %dl.exception-info
       %dt.text-quiet Occurred
