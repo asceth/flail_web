@@ -33,7 +33,7 @@ class WebHook < ActiveRecord::Base
         end
 
         begin
-          http.post(url.path, payload.to_json, {'Content-type' => 'application/json', 'Accept' => 'application/json'})
+          http.post(url.path, {:payload => payload}.to_json, {'Content-type' => 'application/json', 'Accept' => 'application/json'})
         rescue Exception => e
           Rails.logger.error e.inspect
           nil
