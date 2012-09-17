@@ -11,6 +11,8 @@ class DigestsController < ApplicationController
   def update
     resource.resolve!
 
+    WebHook.trigger(:resolution, resource, digest_url(resource.digest))
+
     respond_to do |format|
       format.js do
         render :js => "$('#digest_#{resource.digest}').fadeOut(500, function () { $(this).remove(); });"

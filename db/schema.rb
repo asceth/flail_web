@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120821143437) do
+ActiveRecord::Schema.define(:version => 20120917174722) do
 
   create_table "flail_exceptions", :force => true do |t|
     t.string   "target_url"
@@ -36,5 +36,13 @@ ActiveRecord::Schema.define(:version => 20120821143437) do
   add_index "flail_exceptions", ["environment"], :name => "index_flail_exceptions_on_environment"
   add_index "flail_exceptions", ["resolved_at"], :name => "index_flail_exceptions_on_resolved_at"
   add_index "flail_exceptions", ["tag"], :name => "index_flail_exceptions_on_tag"
+
+  create_table "web_hooks", :force => true do |t|
+    t.boolean  "secure"
+    t.string   "event"
+    t.string   "url"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

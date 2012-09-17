@@ -40,7 +40,8 @@ class FlailExceptionsController < ApplicationController
   end
 
   def create
-    FlailException.swing!(params)
+    fe = FlailException.swing!(params)
+    WebHook.trigger(:exception, fe, digest_url(fe.digest))
 
     render :nothing => true
   end

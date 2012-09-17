@@ -10,6 +10,9 @@
       .navbar-inner
         .container
           = link_to('flail', root_url, :class => 'brand')
+          %ul.nav.pull-right
+            %li{:class => params[:controller] == 'web_hooks' ? 'active' : ''}
+              = link_to('web hooks', web_hooks_url)
     .container
       .row
         .span12

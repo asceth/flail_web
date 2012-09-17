@@ -1,0 +1,33 @@
+%header.jumbotron
+  %h1
+    .pull-right
+      = link_to('New Web Hook', new_web_hook_url, :class => 'btn btn-success')
+    %span.text-quiet Exception /
+    %span Web Hooks
+
+
+- WebHook::EVENT_TYPES.map do |event|
+  .row
+    .span12
+      .page-header
+        %h2= event
+      %table.table.table-striped.table-bordered
+        %thead
+          %tr
+            %th.span1 Secure?
+            %th URL
+            %th.span1 Actions
+        %tbody
+          - if WebHook.where(:event => event).count == 0
+            %tr
+              %td{:colspan => 3}
+                No web hooks registered.
+          - WebHook.where(:event => event).all.map do |hook|
+            %tr
+              %td
+                - if hook.secure
+                  %i.icon.icon-check
+                - else
+                  %i.icon.icon-remove
+              %td= hook.url
+              %td= button_to('Remove', web_hook_url(hook), :class => 'btn btn-danger', :method => :delete)
