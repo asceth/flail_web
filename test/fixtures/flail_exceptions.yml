@@ -7,6 +7,7 @@ gitlab_one:
   tag: "dashboard"
   class_name: "FlailTestingException"
   message: "Testing flail with a flailing exception"
-  params: "{controller: 'pages', action: 'index'}"
-  user: "{}"
-  backtrace: "{}"
+  params: {controller: 'pages', action: 'index'}
+  user: {}
+  backtrace: [{}]
+  digest: "3cb52b1d7e584a0f252b5daaff23719d"
