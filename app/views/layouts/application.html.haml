@@ -13,6 +13,9 @@
           %ul.nav.pull-right
             %li{:class => params[:controller] == 'web_hooks' ? 'active' : ''}
               = link_to('web hooks', web_hooks_url)
+          %ul.nav.pull-right
+            %li{:class => params[:controller] == 'filters' ? 'active' : ''}
+              = link_to('filters', filters_url)
     .container
       .row
         .span12

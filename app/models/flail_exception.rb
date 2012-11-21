@@ -18,6 +18,16 @@ class FlailException < ActiveRecord::Base
     FlailException.with_digest(self.digest).update_all(:resolved_at => Time.now)
   end
 
+  def check_against_filters!(filter_collection)
+    if filter_collection.detect {|filter| filter.match?(self) }
+      self.update_attribute(:resolved_at, Time.now)
+    end
+  end
+
+  def resolved?
+    resolved_at?
+  end
+
   def set_digest
     bt = self.backtrace.first
 
