@@ -41,8 +41,8 @@ class FlailExceptionsController < ApplicationController
 
   def create
     fe = FlailException.swing!(params)
-    fe.check_against_filters!(Filter.all)
-    WebHook.trigger(:exception, fe, digest_url(fe.digest))
+    filtered = fe.check_against_filters!(Filter.all)
+    WebHook.trigger(:exception, fe, digest_url(fe.digest)) unless filtered
 
     render :nothing => true
   end
