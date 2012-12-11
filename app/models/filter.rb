@@ -26,6 +26,35 @@ class Filter < ActiveRecord::Base
     matches_request_params?(flail_exception)
   end
 
+  def parameters
+    parameters_hash = HashWithIndifferentAccess.new
+
+    ALL_PARAMETERS.each do |parameter|
+      parameters_hash[parameter] = send(parameter)
+    end
+
+    parameters_hash
+  end
+
+  def parameters=(other_parameters)
+    ALL_PARAMETERS.each do |parameter|
+      value = other_parameters[parameter] || other_parameters[parameter.to_s]
+      send("#{parameter}=", value)
+    end
+
+    parameters
+  end
+
+  def subset_with(filter_selector)
+    filter = self.class.new(self.attributes.select {|k, v| ALL_PARAMETERS.include?(k.to_sym) })
+
+    ALL_PARAMETERS.each do |parameter|
+      filter.send("#{parameter}=", nil) unless filter_selector.send(parameter)
+    end
+
+    filter
+  end
+
   def to_s
     parameters_hash.map {|k, v| "#{k}: #{v}" }.join("; ")
   end
@@ -36,6 +65,22 @@ class Filter < ActiveRecord::Base
       errors.add(:base, "A filter must include at least one of #{filter_list}")
     end
   end
+
+  module ClassMethods
+    def new_from_exception(flail_exception)
+      return new if flail_exception.nil?
+
+      attributes = {}
+      REGULAR_PARAMETERS.each do |key|
+        value = flail_exception.send(key)
+        attributes[key] = value unless value.blank?
+      end
+      attributes["request_params"] = flail_exception.params
+
+      new(attributes)
+    end
+  end
+  extend ClassMethods
 
   private
 

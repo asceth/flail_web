@@ -76,7 +76,8 @@ class WebHookFiringTest < ActionDispatch::IntegrationTest
     set_hook('exception')
 
     filtering_params = exception_params.reject {|k, v| ![:class_name, :message].include?(k) }
-    post "/filters", {filter: filtering_params}
+    filter_selector = {class_name: '1', message: '1'}
+    post "/filters", {filter: filtering_params.merge(filter_selector: filter_selector)}
 
     post "/swing", exception_params
     assert_response :success

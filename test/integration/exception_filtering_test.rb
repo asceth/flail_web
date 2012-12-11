@@ -43,7 +43,9 @@ class ExceptionFilteringTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Filter.count' do
       filtering_params = exception_params.reject {|k, v| ![:class_name, :message].include?(k) }
-      post "/filters", {filter: filtering_params}
+      post "/filters", {
+        filter: filtering_params.merge(filter_selector: {class_name: '1'})
+      }
     end
 
     assert_no_difference 'FlailException.unresolved.count' do
@@ -53,12 +55,29 @@ class ExceptionFilteringTest < ActionDispatch::IntegrationTest
   end
 
   test "A new exception swung with a non-matching filter should be unresolved" do
-    filtering_params = {class_name: "NoMethodError"}
-    post "/filters", {filter: filtering_params}
+    filtering_params = {
+      class_name: "NoMethodError",
+      filter_selector: {class_name: '1'}
+    }
+    post "/filters", filter: filtering_params
 
     assert_difference 'FlailException.unresolved.count' do
       post "/swing", exception_params
       assert_response :success
     end
+  end
+
+  test "The filter_selector should be used to subset a new filter" do
+    post "/filters", {
+      filter: {
+        class_name: "NoMethodError",
+        message: "undefined method",
+        filter_selector: {class_name: '1'}
+      },
+    }
+
+    filter = Filter.last
+    assert_equal "NoMethodError", filter.class_name
+    assert_nil filter.message
   end
 end

@@ -18,6 +18,7 @@
     .pull-right
       = simple_form_for(resource, :url => digest_url(resource.digest)) do |f|
         %button{:type => 'submit', :class => 'btn btn-success'}== #{icon('icon-check')} Resolve
+      = link_to "#{icon('icon-filter')} Filter".html_safe, new_filter_url(:digest => resource.digest), :class => 'btn btn-warning btn-block'
 
     %dl.exception-info
       %dt.text-quiet Occurred
