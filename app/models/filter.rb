@@ -47,6 +47,7 @@ class Filter < ActiveRecord::Base
 
   def subset_with(filter_selector)
     filter = self.class.new(self.attributes.select {|k, v| ALL_PARAMETERS.include?(k.to_sym) })
+    filter.request_params = request_params
 
     ALL_PARAMETERS.each do |parameter|
       filter.send("#{parameter}=", nil) unless filter_selector.send(parameter)

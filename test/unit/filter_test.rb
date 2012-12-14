@@ -19,9 +19,15 @@ class FilterTest < ActiveSupport::TestCase
   end
 
   test "should validate with just a hash of parameters to include" do
-    request_params = RequestParameters.new('controller' => "things", 'action' => "index")
+    request_params = {controller: "things", action: "index"}
     assert Filter.new(request_params: request_params).valid?,
            "a Filter with just a hash of parameters to include should be valid but isn't"
+  end
+
+  test "should validate with request_params as a JSON object" do
+    request_params = "{\"controller\":\"things\",\"action\":\"index\"}"
+    assert Filter.new(request_params: request_params).valid?,
+           "a Filter with request_params as a JSON object should be valid but isn't"
   end
 
   test "should validate with just a user_agent" do
@@ -144,5 +150,15 @@ class FilterTest < ActiveSupport::TestCase
     assert_equal filter.class_name, new_filter.class_name
     refute_nil filter.message
     assert_nil new_filter.message
+  end
+
+  test "should include request_params in the new filter, if selected" do
+    filter_selector = DummyFilterSelector.new
+    filter_selector[:request_params] = true
+
+    filter = Filter.new(request_params: {controller: "things", action: "index"})
+    new_filter = filter.subset_with(filter_selector)
+
+    assert_equal filter.request_params, new_filter.request_params
   end
 end
