@@ -1,3 +1,7 @@
 %tr
   %td= filter
-  %td= button_to('Remove', filter, :class => 'btn btn-danger', :method => :delete)
+  %td= filter.exceptions_caught
+  %td.filter-actions
+    = link_to("#{icon('icon-list-alt')} View".html_safe, filter, :class => 'btn btn-primary')
+    = simple_form_for(filter, :method => :delete) do |f|
+      %button{:type => 'submit', :class => 'btn btn-danger'}== #{icon('icon-remove')} Remove

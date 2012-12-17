@@ -6,6 +6,7 @@ class FlailException < ActiveRecord::Base
   serialize :backtrace
 
   has_many :occurrences, :class_name => 'FlailException', :foreign_key => 'digest', :primary_key => 'digest'
+  belongs_to :filter, :foreign_key => 'filtered_by', :counter_cache => true
 
   scope :tagged, lambda {|tag| where(:tag => tag)}
   scope :unresolved, where(:resolved_at => nil)
@@ -19,13 +20,21 @@ class FlailException < ActiveRecord::Base
   end
 
   def check_against_filters!(filter_collection)
-    if filter_collection.detect {|filter| filter.match?(self) }
-      self.update_attribute(:resolved_at, Time.now)
+    matching_filter = filter_collection.detect {|filter| filter.match?(self) }
+    if matching_filter
+      self.resolve_with!(matching_filter)
     end
   end
 
   def resolved?
     resolved_at?
+  end
+
+  def resolve_with!(filter)
+    self.resolved_at = Time.now
+    self.filtered_by = filter.id
+
+    save!
   end
 
   def set_digest

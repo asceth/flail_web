@@ -1,6 +1,27 @@
 require 'test_helper'
 
 class FiltersControllerTest < ActionController::TestCase
+  def default_attrs
+    { class_name: "NoMethodError" }
+  end
+
+  def new_filter_id(attrs = {})
+    attrs = default_attrs.merge!(attrs)
+    filter = Filter.create(attrs)
+
+    filter.id
+  end
+
+  test "GET #show should render the :show template" do
+    get :show, id: new_filter_id
+    assert_template "show"
+  end
+
+  test "GET #show should assign @filtered_exceptions" do
+    get :show, id: new_filter_id
+    refute_nil assigns(:filtered_exceptions)
+  end
+
   test "POST #create should create a flail exceptions filter" do
     assert_difference 'Filter.count' do
       post :create, filter: {

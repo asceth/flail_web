@@ -5,8 +5,13 @@ class Filter < ActiveRecord::Base
   GENERAL_PARAMETERS = [:target_url, :environment, :hostname, :tag]
   ALL_PARAMETERS = LIMITING_PARAMETERS + GENERAL_PARAMETERS
   REGULAR_PARAMETERS = ALL_PARAMETERS - [:request_params]
+  HEADER_PARAMETERS = [:class_name, :message, :environment, :tag]
+  OTHER_PARAMETERS = ALL_PARAMETERS - HEADER_PARAMETERS
 
   attr_accessible *ALL_PARAMETERS
+
+  has_many :filtered_exceptions, :class_name => 'FlailException',
+                                 :foreign_key => 'filtered_by'
 
   validate :has_at_least_one_limiting_parameter
 
@@ -58,6 +63,39 @@ class Filter < ActiveRecord::Base
 
   def to_s
     parameters_hash.map {|k, v| "#{k}: #{v}" }.join("; ")
+  end
+
+  def exceptions_caught
+    filtered_exceptions.size
+  end
+
+  def print_class_name
+    class_name.blank? ? "<Any Exception Class>" : class_name
+  end
+
+  def print_environment
+    environment.blank? ? "any environment" : environment
+  end
+
+  def print_message
+    message.blank? ? "<Any error message>" : message
+  end
+
+  def print_tag
+    tag.blank? ? "all projects" : tag
+  end
+
+  def other_parameters
+    parameters = {}
+
+    OTHER_PARAMETERS.each do |param_name|
+      value = send(param_name)
+      unless value.blank?
+        parameters[param_name.to_s.titleize] = value
+      end
+    end
+
+    parameters
   end
 
   def has_at_least_one_limiting_parameter

@@ -1,6 +1,12 @@
 class FiltersController < ApplicationController
   inherit_resources
 
+  def show
+    @filter = Filter.find(params[:id])
+    @filtered_exceptions = FlailException.digested(@filter.filtered_exceptions)
+    show!
+  end
+
   def new
     fe = FlailException.find_by_digest(params[:digest])
     @filter = Filter.new_from_exception(fe)

@@ -3,7 +3,7 @@
     .pull-right
       = link_to('New Filter', new_filter_url, :class => 'btn btn-success')
     %span.text-quiet Exception /
-    %span Filter
+    %span Filters
 
 .row
   .span12
@@ -11,10 +11,11 @@
       %thead
         %tr
           %th Filtered Parameters
-          %th.span1 Actions
+          %th.span2 Exceptions Filtered
+          %th.span4 Actions
       %tbody
         - if Filter.count == 0
           %tr
-            %td{colspan: 2}
+            %td{colspan: 3}
               No filters registered.
         = render collection

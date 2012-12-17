@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121119220540) do
+ActiveRecord::Schema.define(:version => 20121214145454) do
 
   create_table "filters", :force => true do |t|
     t.string   "target_url"
@@ -22,8 +22,9 @@ ActiveRecord::Schema.define(:version => 20121119220540) do
     t.string   "tag"
     t.text     "message"
     t.text     "params_including"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
+    t.integer  "flail_exceptions_count", :default => 0, :null => false
   end
 
   create_table "flail_exceptions", :force => true do |t|
@@ -43,6 +44,7 @@ ActiveRecord::Schema.define(:version => 20121119220540) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "digest"
+    t.integer  "filtered_by"
   end
 
   add_index "flail_exceptions", ["created_at"], :name => "index_flail_exceptions_on_created_at"

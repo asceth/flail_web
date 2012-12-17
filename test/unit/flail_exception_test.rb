@@ -15,7 +15,7 @@ class FlailExceptionTest < ActiveSupport::TestCase
     }
   end
 
-  DummyFilter = Struct.new(:return_value) do
+  DummyFilter = Struct.new(:return_value, :id) do
     def match?(_)
       return_value
     end
@@ -44,5 +44,14 @@ class FlailExceptionTest < ActiveSupport::TestCase
     fe.check_against_filters!([fe_filter])
     refute fe.resolved?,
            "The exception shouldn't have been resolved but was"
+  end
+
+  test "should know which filter caught it" do
+    fe = FlailException.swing!(:trace => [{}])
+    fe_filter = DummyFilter.new(true)
+    fe_filter.id = 74
+
+    fe.check_against_filters!([fe_filter])
+    assert_equal fe_filter.id, fe.filtered_by
   end
 end
