@@ -10,4 +10,5 @@ FlailWeb::Application.routes.draw do
       post :test
     end
   end
+  resources :filters
 end
