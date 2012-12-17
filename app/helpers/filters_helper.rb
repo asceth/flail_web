@@ -9,6 +9,12 @@ module FiltersHelper
 
     attr_accessor :filter_selector, :output_buffer
 
+    def button(type, *args, &block)
+      options = args.extract_options!
+      options[:class] ||= 'btn btn-primary'
+      super(type, *(args << options), &block)
+    end
+
     def input(attribute_name, options = {}, &block)
       options[:wrapper_html] ||= {}
       options[:wrapper_html].merge!(:class => 'span6')

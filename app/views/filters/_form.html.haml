@@ -22,4 +22,5 @@
         = f.input_plus_check_box(:target_url, :input_html => {:class => 'span6'})
         = f.input_plus_check_box(:hostname)
       .form-actions
-        = f.submit
+        = f.button :submit
+        = link_to "#{icon('icon-ban-circle')} Cancel".html_safe, :back, :class => 'btn btn-danger'
