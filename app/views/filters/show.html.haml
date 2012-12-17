@@ -16,6 +16,7 @@
 .row
   .span12
     .pull-right.button-list
+      = link_to("#{icon('icon-edit')} Edit".html_safe, edit_filter_path(resource), :class => 'btn btn-info')
       = simple_form_for(resource, :method => :delete) do |f|
         %button{:type => 'submit', :class => 'btn btn-danger'}== #{icon('icon-remove')} Remove
     %dl.exception-info.clearfix

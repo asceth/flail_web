@@ -1,0 +1,25 @@
+%header.jumbotron
+  %h1
+    %span.text-quiet Exception /
+    %span Filters
+
+.row
+  .span12
+    = filter_form_for(filter, :html => {:class => 'form-vertical'}) do |f|
+      - f.filter_selector = filter_selector
+      %fieldset
+        %legend Limiting Parameters (at least one required)
+        .control-group.error
+          = f.error :base
+        = f.input_plus_check_box(:class_name)
+        = f.input_plus_check_box(:message, :input_html => {:class => 'span6', :rows => '3'})
+        = f.input_plus_check_box(:user_agent, :input_html => {:class => 'span6'})
+        = f.input_plus_check_box(:request_params, :label => "Request parameters to match (in JSON)")
+      %fieldset
+        %legend General Parameters
+        = f.input_plus_check_box(:tag)
+        = f.input_plus_check_box(:environment)
+        = f.input_plus_check_box(:target_url, :input_html => {:class => 'span6'})
+        = f.input_plus_check_box(:hostname)
+      .form-actions
+        = f.submit

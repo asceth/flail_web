@@ -29,4 +29,26 @@ class FiltersController < ApplicationController
       }
     end
   end
+
+  def edit
+    @filter = Filter.find(params[:id])
+    @filter_selector = FilterSelector.from_filter(@filter)
+    edit!
+  end
+
+  def update
+    filter_selector_params = params[:filter].delete(:filter_selector)
+    filter_selector = FilterSelector.new(filter_selector_params)
+
+    @filter = Filter.find(params[:id])
+    params[:filter] = filter_selector.nullify_unselected_parameters(params[:filter])
+
+    update! do |success, failure|
+      success.html { redirect_to filter_url(@filter) }
+      failure.html {
+        @filter_selector = FilterSelector.from_filter(@filter)
+        render action: "edit", status: 422
+      }
+    end
+  end
 end

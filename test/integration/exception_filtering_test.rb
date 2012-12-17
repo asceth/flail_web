@@ -66,18 +66,4 @@ class ExceptionFilteringTest < ActionDispatch::IntegrationTest
       assert_response :success
     end
   end
-
-  test "The filter_selector should be used to subset a new filter" do
-    post "/filters", {
-      filter: {
-        class_name: "NoMethodError",
-        message: "undefined method",
-        filter_selector: {class_name: '1'}
-      },
-    }
-
-    filter = Filter.last
-    assert_equal "NoMethodError", filter.class_name
-    assert_nil filter.message
-  end
 end

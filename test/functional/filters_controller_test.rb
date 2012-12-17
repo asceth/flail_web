@@ -63,4 +63,42 @@ class FiltersControllerTest < ActionController::TestCase
 
     assert_equal "ArgumentError", assigns(:filter).class_name
   end
+
+  test "PUT #update should redirect to the updated filter on success" do
+    filter_id = new_filter_id
+
+    put :update, id: filter_id, filter: {
+      class_name: "ArgumentError",
+      filter_selector: { class_name: '1' }
+    }
+    assert_redirected_to controller: "filters", action: "show", id: filter_id
+  end
+
+  test "PUT #update should render the :edit template on failure" do
+    put :update, id: new_filter_id, filter: {class_name: ""}
+    assert_template "edit"
+  end
+
+  test "PUT #update should respond with 422 Unprocessable Entity on failure" do
+    put :update, id: new_filter_id, filter: {class_name: ""}
+    assert_response 422
+  end
+
+  test "PUT #update should retain the error information on failure" do
+    put :update, id: new_filter_id, filter: {class_name: ""}
+
+    refute_empty assigns(:filter).errors
+  end
+
+  test "PUT #update should retain entered, selected attributes on failure" do
+    filter_id = new_filter_id(class_name: "TypeError")
+
+    put :update, id: new_filter_id, filter: {
+      class_name: "",
+      tag: "awesome",
+      filter_selector: { class_name: '0', tag: '1' }
+    }
+
+    assert_equal "awesome", assigns(:filter).tag
+  end
 end
