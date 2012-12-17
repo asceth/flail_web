@@ -2,7 +2,7 @@
   %td= filter
   %td= filter.exceptions_caught
   %td.filter-actions
-    = link_to("#{icon('icon-list-alt')} View".html_safe, filter, :class => 'btn btn-primary')
-    = link_to("#{icon('icon-edit')} Edit".html_safe, edit_filter_path(filter), :class => 'btn btn-info')
+    = link_to("#{icon('icon-list-alt')} View".html_safe, filter, :class => 'btn btn-info')
+    = link_to("#{icon('icon-edit')} Edit".html_safe, edit_filter_path(filter), :class => 'btn btn-warning')
     = simple_form_for(filter, :method => :delete) do |f|
       %button{:type => 'submit', :class => 'btn btn-danger'}== #{icon('icon-remove')} Remove
