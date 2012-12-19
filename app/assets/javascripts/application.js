@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require d3
+//= require filter_selector
 //= require ready

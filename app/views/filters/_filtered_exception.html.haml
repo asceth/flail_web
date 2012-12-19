@@ -1,0 +1,12 @@
+.well.well-exception{:id => "digest_#{filtered_exception.first.digest}"}
+  .pull-right
+    %p.label.label-info= filtered_exception.first.tag
+    %p.label= filtered_exception.first.environment
+  .occurences.pull-left
+    %h2
+      .text-danger= filtered_exception.first.occurrences.count
+      %small occurrences
+  %h4
+    %span= link_to(filtered_exception.first.class_name, digest_url(filtered_exception.first.digest))
+    %small== last occurence #{time_ago_in_words(filtered_exception.first.created_at)}
+  %p.message= filtered_exception.first.message

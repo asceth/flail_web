@@ -71,4 +71,7 @@ $(document).ready(function() {
       el.click();
     }
   });
+
+  // disable/enable filter parameters based on check boxes
+  $('input[data-filter-selector]').filterSelector();
 });

@@ -1,0 +1,32 @@
+%header.jumbotron
+  %h1
+    %span.text-quiet Exception /
+    %span Filter
+
+.row
+  .span12
+    .page-header
+      .pull-right
+        %p.label.label-info= resource.print_tag
+        %p.label= resource.print_environment
+      %h2
+        = resource.print_class_name
+        %small= resource.print_message
+
+.row
+  .span12
+    .pull-right.button-list
+      = link_to("#{icon('icon-edit')} Edit".html_safe, edit_filter_path(resource), :class => 'btn btn-warning')
+      = simple_form_for(resource, :method => :delete) do |f|
+        %button{:type => 'submit', :class => 'btn btn-danger'}== #{icon('icon-remove')} Remove
+    %dl.exception-info.clearfix
+      - resource.other_parameters.each do |param_name, param_value|
+        %dt.text-quiet= param_name
+        %dd= param_value
+      %dt.text-quiet= "No other parameters set." if resource.other_parameters.empty?
+
+.row
+  .span12
+    %h3 Filtered Exceptions
+    %hr
+    = render :partial => 'filtered_exception', :collection => @filtered_exceptions
