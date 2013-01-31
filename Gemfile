@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '~> 3.2.11'
 
 gem 'pg', '~> 0.13.0'
+gem 'sqlite3'
 
 #
 # alphabetized
@@ -19,6 +20,7 @@ gem 'inherited_resources', '1.3.1'
 
 gem 'resque', '1.20.0'
 
+gem 'sass'
 gem 'shotgun'
 gem 'simple_form', '2.0.2'
 
