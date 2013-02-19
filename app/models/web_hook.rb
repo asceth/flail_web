@@ -50,6 +50,7 @@ class WebHook < ActiveRecord::Base
         :environment => exception.environment,
         :similar => similar,
         :exception => exception.class_name,
+        :message => exception.message[0..128],
       }
     end
 
@@ -62,6 +63,7 @@ class WebHook < ActiveRecord::Base
         :environment => exception.environment,
         :similar => similar,
         :exception => exception.class_name,
+        :message => exception.message[0..128],
       }
     end
   end
