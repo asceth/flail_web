@@ -1,3 +1,8 @@
+### Deprecated
+This project is no longer being maintained and new flail-web project using Sinatra has been created: https://github.com/BenFenner/flail_web_sinatra
+
+
+### Original README
 Web interface for http://github.com/asceth/flail using Rails 3.
 
 * Designed to be deployed as a normal Rails 3 application which means you need to copy/link/etc your own database.yml, config.ru (if mounting differently), etc.
