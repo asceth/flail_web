@@ -32,7 +32,7 @@ gem 'unicorn', '4.3.1'
 group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
-  gem 'jquery-rails', '2.0.2'
+  gem 'jquery-rails', '3.1.3'
 
   gem 'less', '2.2.1'
   gem 'less-rails', '2.2.3'
